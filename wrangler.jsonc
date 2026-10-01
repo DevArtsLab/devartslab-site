@@ -1,9 +1,9 @@
 /**
  * ============================================================================
- * devartslab-site — edge router for the public site surface
+ * devartslab-site — DevArts Lab landing page
  * ============================================================================
- * docs.devartslab.com -> reverse-proxy of the public Notion site
- * devartslab.com/www  -> DevArts Lab landing page
+ * devartslab.com/www -> landing page
+ * docs.devartslab.com is served by the devartslab-notion Worker (separate repo)
  * ============================================================================
  */
 {
@@ -15,7 +15,6 @@
   "workers_dev": true,
 
   "routes": [
-    { "pattern": "docs.devartslab.com", "custom_domain": true },
     { "pattern": "devartslab.com/*", "zone_name": "devartslab.com" },
     { "pattern": "www.devartslab.com/*", "zone_name": "devartslab.com" },
   ],
@@ -23,6 +22,5 @@
   "vars": {
     "MAIL_DOMAIN": "devartslab.com",
     "DOCS_HOSTNAME": "docs.devartslab.com",
-    "NOTION_PAGE_ID": "61c6b79808ce476290c753165851b070",
   },
 }

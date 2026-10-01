@@ -1,87 +1,20 @@
-// devartslab-site: hostname routing for the public site surface.
-//   docs.devartslab.com -> reverse-proxy of the public Notion site
+// devartslab-site: DevArts Lab landing page.
 //   devartslab.com / www.devartslab.com -> landing page
+//   docs.devartslab.com is served by the devartslab-notion Worker (separate repo)
 
 export interface Env {
   MAIL_DOMAIN: string;
   DOCS_HOSTNAME: string;
-  NOTION_PAGE_ID: string;
 }
-
-const NOTION_ORIGIN = "https://www.notion.so";
-
-const DROP_RESPONSE_HEADERS = new Set([
-  "content-encoding",
-  "content-length",
-  "transfer-encoding",
-  "content-security-policy",
-  "content-security-policy-report-only",
-  "set-cookie",
-  "x-frame-options",
-  "report-to",
-  "nel",
-]);
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const host = new URL(request.url).hostname.toLowerCase();
-    if (host === env.DOCS_HOSTNAME.toLowerCase()) return proxyNotion(request, env);
-    if (host === env.MAIL_DOMAIN || host === `www.${env.MAIL_DOMAIN}`) return landingPage(env);
+    if (host === env.MAIL_DOMAIN || host === `www.${env.MAIL_DOMAIN}`)
+      return landingPage(env);
     return new Response("devartslab-site", { status: 404 });
   },
 } satisfies ExportedHandler<Env>;
-
-async function proxyNotion(request: Request, env: Env): Promise<Response> {
-  const url = new URL(request.url);
-  const path = url.pathname === "/" ? `/${env.NOTION_PAGE_ID}` : url.pathname;
-  const upstream = new URL(path + url.search, NOTION_ORIGIN);
-
-  const headers = new Headers();
-  for (const [k, v] of request.headers) {
-    const lk = k.toLowerCase();
-    if (["host", "cookie", "cf-connecting-ip", "cf-ray", "cf-visitor", "x-forwarded-for", "x-forwarded-proto"].includes(lk)) continue;
-    headers.set(k, v);
-  }
-  headers.set("host", "www.notion.so");
-
-  const upstreamResp = await fetch(upstream.toString(), {
-    method: request.method === "POST" ? "GET" : request.method,
-    headers,
-    redirect: "follow",
-  });
-
-  const outHeaders = new Headers();
-  for (const [k, v] of upstreamResp.headers) {
-    if (DROP_RESPONSE_HEADERS.has(k.toLowerCase())) continue;
-    outHeaders.set(k, v);
-  }
-  const loc = upstreamResp.headers.get("location");
-  if (loc) outHeaders.set("location", rewriteNotionUrl(loc, env.DOCS_HOSTNAME));
-
-  const ct = upstreamResp.headers.get("content-type") || "";
-  if (ct.includes("text/html")) {
-    const html = await upstreamResp.text();
-    outHeaders.set("content-type", "text/html; charset=utf-8");
-    return new Response(rewriteHtml(html, env.DOCS_HOSTNAME), {
-      status: upstreamResp.status,
-      headers: outHeaders,
-    });
-  }
-  return new Response(upstreamResp.body, { status: upstreamResp.status, headers: outHeaders });
-}
-
-function rewriteNotionUrl(value: string, docsHost: string): string {
-  return value
-    .replace(/https:\/\/(www\.)?notion\.so/gi, `https://${docsHost}`)
-    .replace(/https:\/\/[a-z0-9-]+\.notion\.site/gi, `https://${docsHost}`);
-}
-
-function rewriteHtml(html: string, docsHost: string): string {
-  return rewriteNotionUrl(html, docsHost).replace(
-    /<head>/i,
-    '<head><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23f6821f%22/><text x=%2250%22 y=%2268%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22>D</text></svg>">',
-  );
-}
 
 function landingPage(env: Env): Response {
   const html = `<!doctype html>
@@ -131,5 +64,7 @@ function landingPage(env: Env): Response {
 <footer><span>&copy; ${new Date().getUTCFullYear()} DevArts Lab</span><a href="mailto:contact@${env.MAIL_DOMAIN}">contact@${env.MAIL_DOMAIN}</a></footer>
 </body>
 </html>`;
-  return new Response(html, { headers: { "content-type": "text/html; charset=utf-8" } });
+  return new Response(html, {
+    headers: { "content-type": "text/html; charset=utf-8" },
+  });
 }

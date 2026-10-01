@@ -2,7 +2,7 @@
   "name": "devartslab-site",
   "version": "1.0.0",
   "private": true,
-  "description": "Edge router for devartslab.com: docs. Notion proxy + landing page",
+  "description": "DevArts Lab landing page on devartslab.com",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
