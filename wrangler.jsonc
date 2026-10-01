@@ -1,0 +1,32 @@
+/**
+ * ============================================================================
+ * devartslab-site — edge router for the public site surface
+ * ============================================================================
+ * docs.devartslab.com -> reverse-proxy of the public Notion site
+ * devartslab.com/www  -> DevArts Lab landing page
+ * ============================================================================
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "devartslab-site",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+
+  "routes": [
+    // custom_domain: creates its own DNS record + cert; also takes
+    // precedence over zone-level redirect rules at the edge
+    { "pattern": "docs.devartslab.com", "custom_domain": true },
+    // plain routes on the existing proxied apex/www records; they go live
+    // once the legacy *devartslab.com -> notion.so redirect rule is removed
+    { "pattern": "devartslab.com/*", "zone_name": "devartslab.com" },
+    { "pattern": "www.devartslab.com/*", "zone_name": "devartslab.com" },
+  ],
+
+  "vars": {
+    "MAIL_DOMAIN": "devartslab.com",
+    "DOCS_HOSTNAME": "docs.devartslab.com",
+    "NOTION_PAGE_ID": "61c6b79808ce476290c753165851b070",
+  },
+}
