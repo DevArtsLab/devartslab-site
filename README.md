@@ -11,10 +11,10 @@ Edge router for the public surface of `devartslab.com`.
 
 ## Routes
 
-| Hostname                 | Serves                                                              |
-| ------------------------ | ------------------------------------------------------------------- |
-| `docs.devartslab.com`    | Public Notion site, reverse-proxied (visitors never see notion.so)  |
-| `devartslab.com` / `www` | DevArts Lab landing page                                            |
+| Hostname                 | Serves                                                             |
+| ------------------------ | ------------------------------------------------------------------ |
+| `docs.devartslab.com`    | Public Notion site, reverse-proxied (visitors never see notion.so) |
+| `devartslab.com` / `www` | DevArts Lab landing page                                           |
 
 The mail app lives in a separate repo: [DevArtsLab/devarts-mail](https://github.com/DevArtsLab/devarts-mail).
 
@@ -25,6 +25,6 @@ npm install
 npx wrangler deploy
 ```
 
-`docs.` uses a Worker custom domain (auto-creates its DNS record + cert, and
-takes precedence over zone redirect rules at the edge). `apex`/`www` use
-Worker routes on the existing proxied records.
+`docs.` uses a Worker custom domain (auto-creates its DNS record + cert).
+`apex`/`www` use Worker routes on the existing proxied records. Zone Redirect
+Rules still evaluate before the Worker, so none may match these hostnames.
