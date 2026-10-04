@@ -55,6 +55,11 @@ function landingPage(env: Env): Response {
     h1 { font-size:56px; }
     p.sub { font-size:18px; }
   }
+  .products { max-width:1060px; width:100%; margin-top:64px; }
+  .products h2 { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.12em;
+                 color:var(--muted); margin-bottom:16px; margin-left:20px; }
+  .product-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; }
+  .card.primary { border-color:rgba(136,112,142,.55); }
   .card { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:20px;
           text-decoration:none; color:var(--text); transition:border-color .15s, transform .15s; }
   .card:hover { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); transform:translateY(-2px); }
@@ -81,6 +86,13 @@ function landingPage(env: Env): Response {
       <a class="card" href="https://mail.${env.MAIL_DOMAIN}"><b>Mail</b><span>mail.${env.MAIL_DOMAIN}</span></a>
     </div>
   </div>
+  <section class="products">
+    <h2>Products</h2>
+    <div class="product-cards">
+      <a class="card primary" href="https://american-community-network.${env.MAIL_DOMAIN}"><b>American Community Network</b><span>american-community-network.${env.MAIL_DOMAIN}</span></a>
+      <a class="card" href="https://voice-quote.${env.MAIL_DOMAIN}"><b>Voice Quote</b><span>voice-quote.${env.MAIL_DOMAIN}</span></a>
+    </div>
+  </section>
 </main>
 <footer><span>&copy; ${new Date().getUTCFullYear()} DevArts Lab</span><a href="mailto:contact@${env.MAIL_DOMAIN}">contact@${env.MAIL_DOMAIN}</a></footer>
 </body>
