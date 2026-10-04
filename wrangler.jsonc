@@ -4,12 +4,14 @@
  * ============================================================================
  * devartslab.com/www -> landing page
  * docs.devartslab.com is served by the devartslab-notion Worker (separate repo)
+ * data.devartslab.com is served by the tool-github-export Worker (separate repo)
  * ============================================================================
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "devartslab-site",
   "main": "src/index.ts",
+  "assets": { "directory": "./public/" },
   "compatibility_date": "2026-09-30",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
@@ -22,5 +24,6 @@
   "vars": {
     "MAIL_DOMAIN": "devartslab.com",
     "DOCS_HOSTNAME": "docs.devartslab.com",
+    "DATA_HOSTNAME": "data.devartslab.com",
   },
 }
