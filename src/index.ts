@@ -90,7 +90,7 @@ function landingPage(env: Env): Response {
     <h2>Products</h2>
     <div class="product-cards">
       <a class="card primary" href="https://american-community-network.${env.MAIL_DOMAIN}"><b>American Community Network</b><span>american-community-network.${env.MAIL_DOMAIN}</span></a>
-      <a class="card" href="https://voice-quote.${env.MAIL_DOMAIN}"><b>Voice Quote</b><span>voice-quote.${env.MAIL_DOMAIN}</span></a>
+      <!-- <a class="card" href="https://voice-quote.${env.MAIL_DOMAIN}"><b>Voice Quote</b><span>voice-quote.${env.MAIL_DOMAIN}</span></a> -->
     </div>
   </section>
 </main>
