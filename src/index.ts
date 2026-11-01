@@ -11,12 +11,25 @@ export interface Env {
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    const host = new URL(request.url).hostname.toLowerCase();
-    if (host === env.MAIL_DOMAIN || host === `www.${env.MAIL_DOMAIN}`)
+    const url = new URL(request.url);
+    const host = url.hostname.toLowerCase();
+    if (host === env.MAIL_DOMAIN || host === `www.${env.MAIL_DOMAIN}`) {
+      if (url.pathname === "/.well-known/security.txt") return securityTxt();
       return landingPage(env);
+    }
     return new Response("devartslab-site", { status: 404 });
   },
 } satisfies ExportedHandler<Env>;
+
+function securityTxt(): Response {
+  const body = `Contact: mailto:security@devartslab.com
+Expires: 2027-11-01T00:00:00.000Z
+Preferred-Languages: en
+`;
+  return new Response(body, {
+    headers: { "content-type": "text/plain; charset=utf-8" },
+  });
+}
 
 function landingPage(env: Env): Response {
   const html = `<!doctype html>
