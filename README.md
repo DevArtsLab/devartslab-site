@@ -15,9 +15,6 @@ DevArts Lab landing page on `devartslab.com`.
 | ------------------------ | ------------------------ |
 | `devartslab.com` / `www` | DevArts Lab landing page |
 
-The docs proxy lives in a separate repo: [DevArtsLab/devartslab-notion](https://github.com/DevArtsLab/devartslab-notion).
-The mail app lives in a separate repo: [DevArtsLab/devarts-mail](https://github.com/DevArtsLab/devarts-mail).
-
 ## Deploy
 
 ```bash
