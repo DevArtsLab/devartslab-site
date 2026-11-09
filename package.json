@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "description": "DevArts Lab landing page on devartslab.com",
+  "packageManager": "pnpm@12.18.0",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20260930.2",
-    "typescript": "^5.9.2",
-    "wrangler": "^4.145.0"
+    "@cloudflare/workers-types": "^5.20261109.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.158.0"
   }
 }
