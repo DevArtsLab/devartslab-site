@@ -18,7 +18,7 @@ DevArts Lab landing page on `devartslab.com`.
 ## Deploy
 
 ```bash
-npm install
+pnpm install
 npx wrangler deploy
 ```
 
