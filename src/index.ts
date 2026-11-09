@@ -38,7 +38,7 @@ function landingPage(env: Env): Response {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DevArts Lab</title>
-<meta name="description" content="DevArts Lab - independent engineering studio">
+<meta name="description" content="DevArts Lab engineering studio">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,7 +90,7 @@ function landingPage(env: Env): Response {
     <div class="brand">
       <img class="hero-logo" src="/logo.jpg" alt="DevArts Lab">
       <h1>Dev<em>Arts</em> Lab</h1>
-      <p class="sub">Independent engineering studio.</p>
+      <p class="sub">Engineering studio.</p>
     </div>
     <div class="cards">
       <a class="card" href="https://${env.DOCS_HOSTNAME}"><b>Docs</b><span>${env.DOCS_HOSTNAME}</span></a>
