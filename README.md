@@ -19,7 +19,7 @@ DevArts Lab landing page on `devartslab.com`.
 
 ```bash
 pnpm install
-npx wrangler deploy
+pnpm deploy
 ```
 
 `apex`/`www` use Worker routes on the existing proxied records. Zone Redirect
