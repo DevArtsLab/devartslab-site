@@ -26,4 +26,8 @@
     "DOCS_HOSTNAME": "docs.devartslab.com",
     "DATA_HOSTNAME": "data.devartslab.com",
   },
+
+  "observability": {
+    "enabled": true,
+  },
 }
